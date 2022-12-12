@@ -1,5 +1,6 @@
 import sys
 
+list_with_str = []
 
 def task1():
     country_input = sys.argv[3]
@@ -35,6 +36,7 @@ def task1():
                     sum_bronze += 1
                 if sum_gold + sum_silver + sum_bronze <= 10:
                     print(f"{name} - {sport} - {medal}")
+                    list_with_str.append(f"{name} - {sport} - {medal}")
 
         if 0 < sum_gold + sum_silver + sum_bronze < 10:
             print("Less than 10 medals!")
@@ -43,10 +45,20 @@ def task1():
             print("Incorrect input")
             exit()
         print(f"Gold medals - {sum_gold}, Silver medals - {sum_silver}, Bronze medals - {sum_bronze}")
+        list_with_str.append(f"Gold medals - {sum_gold}, Silver medals - {sum_silver}, Bronze medals - {sum_bronze}")
+
+def output_w(listik):
+    file_output = sys.argv[6]
+    with open(file_output, "w") as output:
+        for line in listik:
+            output.write(line)
 
 def main():
     if sys.argv[2] == "-medals":
         task1()
+        if len(sys.argv) > 5:
+            if sys.argv[5] == "-output":
+                output_w(list_with_str)
     else:
         pass
 
