@@ -53,12 +53,38 @@ def output_w(listik):
         for line in listik:
             output.write(line)
 
+
+def task2():
+    years_input = sys.argv[3]
+
+    with open("athlete_events.tsv", "r") as file:
+        head_line = file.readline()
+        while True:
+            line = file.readline()
+            if not line:
+                break
+
+            split_line = line.split("\t")
+            country_name = split_line[6]
+            year = split_line[9]
+            medal = split_line[14]
+
+            if medal == "NA\n":
+                continue
+            if years_input == year:
+                print(f"{country_name} - {medal}")
+
+
 def main():
     if sys.argv[2] == "-medals":
         task1()
         if len(sys.argv) > 5:
             if sys.argv[5] == "-output":
                 output_w(list_with_str)
+    else:
+        pass
+    if sys.argv[2] == "-total":
+        task2()
     else:
         pass
 
