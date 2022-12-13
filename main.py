@@ -70,16 +70,19 @@ def task2():
             split_line = line.split("\t")
             country_name = split_line[6]
             year = split_line[9]
-            medal = split_line[14]
+            medal = split_line[14].replace("\n", "")
 
-            if medal == "NA\n":
+            if medal == "NA":
                 continue
-            if year == years_input:
+            if years_input == year:
                 if country_name not in result:
                     result[country_name] = [medal]
                 else:
-                    result[country_name].append(medal)
-    print(result)
+                    if medal not in result[country_name]:
+                        result[country_name].append(medal)
+    for k, v in result.items():
+        a = " - ".join(v)
+        print(f"{k} - {a}")
 
 
 def main():
