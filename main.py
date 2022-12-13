@@ -116,6 +116,30 @@ def task3():
                 index = [index for index, item in enumerate(list_with_amount_of_medals) if item == max_value][0]
             print(f"{country_input} - {result_keys[index]} - {max_value}")
 
+def task4():
+    country_input = input("Please, write country:")
+    result_years = {}
+    with open("athlete_events.tsv", "r") as file:
+        head_line = file.readline()
+        while True:
+            line = file.readline()
+            if not line:
+                break
+
+            split_line = line.split("\t")
+            country_name = split_line[6]
+            year = split_line[9]
+            medal = split_line[14]
+            city = split_line[11]
+
+            if country_input == country_name:
+                if country_input not in result_years:
+                    result_years[country_input] = [year]
+                else:
+                    result_years[country_input].append(year)
+                first_year = min(list(result_years.values())[0])
+    print(f"First year: {first_year}")
+
 def main():
     if sys.argv[2] == "-medals":
         task1()
@@ -126,6 +150,8 @@ def main():
         task2()
     if sys.argv[2] == "-overall":
         task3()
+    if sys.argv[2] == "-interactive":
+        task4()
     else:
         pass
 
