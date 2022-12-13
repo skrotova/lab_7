@@ -2,6 +2,7 @@ import sys
 
 list_with_str = []
 
+
 def task1():
     country_input = sys.argv[3]
     years_input = sys.argv[4]
@@ -47,6 +48,7 @@ def task1():
         print(f"Gold medals - {sum_gold}, Silver medals - {sum_silver}, Bronze medals - {sum_bronze}")
         list_with_str.append(f"Gold medals - {sum_gold}, Silver medals - {sum_silver}, Bronze medals - {sum_bronze}")
 
+
 def output_w(listik):
     file_output = sys.argv[6]
     with open(file_output, "w") as output:
@@ -56,6 +58,7 @@ def output_w(listik):
 
 def task2():
     years_input = sys.argv[3]
+    result = dict()
 
     with open("athlete_events.tsv", "r") as file:
         head_line = file.readline()
@@ -71,8 +74,12 @@ def task2():
 
             if medal == "NA\n":
                 continue
-            if years_input == year:
-                print(f"{country_name} - {medal}")
+            if year == years_input:
+                if country_name not in result:
+                    result[country_name] = [medal]
+                else:
+                    result[country_name].append(medal)
+    print(result)
 
 
 def main():
