@@ -84,6 +84,37 @@ def task2():
         a = " - ".join(v)
         print(f"{k} - {a}")
 
+def task3():
+    countries = sys.argv[3:]
+    for country_input in countries:
+        result = {}
+        list_with_amount_of_medals = []
+        with open("athlete_events.tsv", "r") as file:
+            head_line = file.readline()
+            while True:
+                line = file.readline()
+                if not line:
+                    break
+
+                split_line = line.split("\t")
+                country_name = split_line[6]
+                year = split_line[9]
+                medal = split_line[14]
+
+                if medal == "NA\n":
+                    continue
+                if country_input == country_name:
+                    if year not in result:
+                        result[year] = [medal]
+                    else:
+                        result[year].append(medal)
+            result_keys = list(result.keys())
+            result_values = list(result.values())
+            for i in range(len(result_values)):
+                list_with_amount_of_medals.append(len(result_values[i]))
+                max_value = max(list_with_amount_of_medals)
+                index = [index for index, item in enumerate(list_with_amount_of_medals) if item == max_value][0]
+            print(f"{country_input} - {result_keys[index]} - {max_value}")
 
 def main():
     if sys.argv[2] == "-medals":
@@ -91,10 +122,10 @@ def main():
         if len(sys.argv) > 5:
             if sys.argv[5] == "-output":
                 output_w(list_with_str)
-    else:
-        pass
     if sys.argv[2] == "-total":
         task2()
+    if sys.argv[2] == "-overall":
+        task3()
     else:
         pass
 
