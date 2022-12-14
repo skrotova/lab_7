@@ -118,8 +118,7 @@ def task3():
             print(f"{country_input} - {result_keys[index]} - {max_value}")
 
 
-def task4():
-    country_input = input("Please, write country:")
+def task4_first_year_and_country(country_input):
     result_years = {}
     with open("athlete_events.tsv", "r") as file:
         head_line = file.readline()
@@ -131,7 +130,6 @@ def task4():
             split_line = line.split("\t")
             country_name = split_line[6]
             year = split_line[9]
-            medal = split_line[14]
             city = split_line[11]
 
             if country_input == country_name:
@@ -147,6 +145,40 @@ def task4():
     print(f"First city: {first_city}")
 
 
+def task4_max_min_medals(country_input):
+    result_medals = {}
+    list_with_amount_of_medals = []
+    with open("athlete_events.tsv", "r") as file:
+        head_line = file.readline()
+        while True:
+            line = file.readline()
+            if not line:
+                break
+
+            split_line = line.split("\t")
+            country_name = split_line[6]
+            year = split_line[9]
+            medal = split_line[14]
+
+            if medal == "NA\n":
+                continue
+            if country_input == country_name:
+                if year not in result_medals:
+                    result_medals[year] = [medal]
+                else:
+                    result_medals[year].append(medal)
+        result_keys = list(result_medals.keys())
+        result_values = list(result_medals.values())
+        for i in range(len(result_values)):
+            list_with_amount_of_medals.append(len(result_values[i]))
+            max_value = max(list_with_amount_of_medals)
+            min_value = min(list_with_amount_of_medals)
+            index_max = [index for index, item in enumerate(list_with_amount_of_medals) if item == max_value][0]
+            index_min = [index for index, item in enumerate(list_with_amount_of_medals) if item == min_value][0]
+    print(f"Most successful year - {result_keys[index_max]}, amount of medals - {max_value}")
+    print(f"Least successful year - {result_keys[index_min]}, amount of medals - {min_value}")
+
+
 def main():
     if sys.argv[2] == "-medals":
         task1()
@@ -158,7 +190,9 @@ def main():
     if sys.argv[2] == "-overall":
         task3()
     if sys.argv[2] == "-interactive":
-        task4()
+        country_input = input("Please write your country:")
+        task4_first_year_and_country(country_input)
+        task4_max_min_medals(country_input)
     else:
         pass
 
