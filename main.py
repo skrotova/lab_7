@@ -129,10 +129,11 @@ def task4_first_year_and_country(country_input):
 
             split_line = line.split("\t")
             country_name = split_line[6]
+            country_noc = split_line[7]
             year = split_line[9]
             city = split_line[11]
 
-            if country_input == country_name:
+            if country_input == country_name or country_input == country_noc:
                 if country_input not in result_years:
                     result_years[country_input] = [year]
                 else:
@@ -157,12 +158,13 @@ def task4_max_min_medals(country_input):
 
             split_line = line.split("\t")
             country_name = split_line[6]
+            country_noc = split_line[7]
             year = split_line[9]
             medal = split_line[14]
 
             if medal == "NA\n":
                 continue
-            if country_input == country_name:
+            if country_input == country_name or country_input == country_noc:
                 if year not in result_medals:
                     result_medals[year] = [medal]
                 else:
@@ -193,12 +195,13 @@ def task4_average_medals(country_input):
 
             split_line = line.split("\t")
             country_name = split_line[6]
+            country_noc = split_line[7]
             year = split_line[9]
             medal = split_line[14]
 
             if medal == "NA\n":
                 continue
-            if country_input == country_name:
+            if country_input == country_name or country_input == country_noc:
                 if year not in result_medals:
                     result_medals[year] = [medal]
                 else:
