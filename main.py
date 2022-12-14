@@ -84,6 +84,7 @@ def task2():
         a = " - ".join(v)
         print(f"{k} - {a}")
 
+
 def task3():
     countries = sys.argv[3:]
     for country_input in countries:
@@ -116,6 +117,7 @@ def task3():
                 index = [index for index, item in enumerate(list_with_amount_of_medals) if item == max_value][0]
             print(f"{country_input} - {result_keys[index]} - {max_value}")
 
+
 def task4():
     country_input = input("Please, write country:")
     result_years = {}
@@ -138,7 +140,12 @@ def task4():
                 else:
                     result_years[country_input].append(year)
                 first_year = min(list(result_years.values())[0])
+                if first_year == year:
+                    first_city = city
+
     print(f"First year: {first_year}")
+    print(f"First city: {first_city}")
+
 
 def main():
     if sys.argv[2] == "-medals":
