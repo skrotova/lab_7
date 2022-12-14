@@ -179,6 +179,48 @@ def task4_max_min_medals(country_input):
     print(f"Least successful year - {result_keys[index_min]}, amount of medals - {min_value}")
 
 
+def task4_average_medals(country_input):
+    result_medals = {}
+    amount_gold = 0
+    amount_silver = 0
+    amount_bronze = 0
+    with open("athlete_events.tsv", "r") as file:
+        head_line = file.readline()
+        while True:
+            line = file.readline()
+            if not line:
+                break
+
+            split_line = line.split("\t")
+            country_name = split_line[6]
+            year = split_line[9]
+            medal = split_line[14]
+
+            if medal == "NA\n":
+                continue
+            if country_input == country_name:
+                if year not in result_medals:
+                    result_medals[year] = [medal]
+                else:
+                    result_medals[year].append(medal)
+        result_keys = list(result_medals.keys())
+        result_values = list(result_medals.values())
+        amount_of_years = len(result_keys)
+        for i in range(amount_of_years):
+            list_medals = result_values[i]
+            for index in range(len(list_medals)):
+                if list_medals[index] == "Gold\n":
+                    amount_gold += 1
+                if list_medals[index] == "Silver\n":
+                    amount_silver += 1
+                if list_medals[index] == "Bronze\n":
+                    amount_bronze += 1
+        average_gold = amount_gold / amount_of_years
+        average_silver = amount_silver / amount_of_years
+        average_bronze = amount_bronze / amount_of_years
+    print(f"Average gold medals - {average_gold}, average silver medals - {average_silver}, average bronze medals - {average_bronze}")
+
+
 def main():
     if sys.argv[2] == "-medals":
         task1()
@@ -193,6 +235,7 @@ def main():
         country_input = input("Please write your country:")
         task4_first_year_and_country(country_input)
         task4_max_min_medals(country_input)
+        task4_average_medals(country_input)
     else:
         pass
 
