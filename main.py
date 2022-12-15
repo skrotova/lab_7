@@ -58,7 +58,8 @@ def output_w(listik):
 
 def task2():
     years_input = sys.argv[3]
-    result = dict()
+    result = {}
+    final_results = {}
 
     with open("athlete_events.tsv", "r") as file:
         head_line = file.readline()
@@ -70,19 +71,32 @@ def task2():
             split_line = line.split("\t")
             country_name = split_line[6]
             year = split_line[9]
-            medal = split_line[14].replace("\n", "")
+            medal = split_line[14]
 
-            if medal == "NA":
+            if medal == "NA\n":
                 continue
             if years_input == year:
                 if country_name not in result:
                     result[country_name] = [medal]
                 else:
-                    if medal not in result[country_name]:
-                        result[country_name].append(medal)
-    for k, v in result.items():
-        a = " - ".join(v)
-        print(f"{k} - {a}")
+                    result[country_name].append(medal)
+            result_keys = list(result.keys())
+            result_values = list(result.values())
+            for i in range(len(result_keys)):
+                list_of_medals = result_values[i]
+                sum_gold = 0
+                sum_silver = 0
+                sum_bronze = 0
+                for index in range(len(list_of_medals)):
+                    if list_of_medals[index] == "Gold\n":
+                        sum_gold += 1
+                    if list_of_medals[index] == "Silver\n":
+                        sum_silver += 1
+                    if list_of_medals[index] == "Bronze\n":
+                        sum_bronze += 1
+                final_results[result_keys[i]] = [sum_gold, sum_silver, sum_bronze]
+        for k, v in final_results.items():
+            print(f"{k} - {v}")
 
 
 def task3():
